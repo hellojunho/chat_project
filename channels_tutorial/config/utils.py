@@ -11,6 +11,11 @@ load_dotenv()
 def send_email(receiver_email: str, message_body: str) -> bool:
         """
         메일 전송 함수
+        params:
+        - receiver_email: str
+        - message_body: str
+        return:
+        - 메일 전송 성공 시 True, 실패 시 False
         """
         sender_email = os.getenv("EMAIL_HOST_USER")
 
@@ -31,6 +36,10 @@ def send_email(receiver_email: str, message_body: str) -> bool:
 def exception_handler(view: bool = False):
     """
     예외처리 데코레이터
+    params:
+    - view: bool
+    return:
+    - 예외 발생 시, 에러 메시지 출력
     """
     def exception_handler_decorator(func):
         @wraps(func)
