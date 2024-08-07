@@ -4,19 +4,22 @@ from dotenv import load_dotenv
 from functools import wraps
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
+from typing import List, Dict, Optional
 load_dotenv()
 
-def send_email(receiver_email, message_body):
+
+def send_email(receiver_email: str, message_body: str) -> bool:
         """
         메일 전송 함수
         """
-        msg = EmailMultiAlternatives(
-            "메시지가 도착했습니다.",
-            f"{message_body}",
-            os.getenv("EMAIL_HOST_ID"),
-            [receiver_email] 
-        )
+        sender_email = os.getenv("EMAIL_HOST_USER")
 
+        msg = EmailMultiAlternatives(
+            subject="메시지가 도착했습니다.",
+            body=f"{message_body}",
+            from_email=sender_email,
+            to = [receiver_email]
+        )
         try:
             msg.send()
             return True
