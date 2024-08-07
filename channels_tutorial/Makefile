@@ -1,7 +1,5 @@
-# Define variables
 PYTHON = python3
 
-# Define targets
 new-makemigrations:
 	$(PYTHON) manage.py makemigrations chat
 	$(PYTHON) manage.py makemigrations accounts
