@@ -29,18 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-AUTH_USER_MODEL = "accounts.CustomUser"
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            # "hosts": [('redis', os.getenv("REDIS_PORT"))],
-            "hosts": [('localhost', os.getenv("REDIS_PORT"))],
-        },
-    },
-}
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -88,30 +76,29 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
-ASGI_APPLICATION = 'config.asgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
+# # 로컬에서 SQLite3을 사용할 경우 아래 코드 활성화
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": os.getenv("DB_NAME"),
-#         "USER": os.getenv("DB_USER"),
-#         "PASSWORD": os.getenv("DB_PASSWORD"),
-#         "HOST": os.getenv("DB_HOST"),
-#         "PORT": os.getenv("DB_PORT"),
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
+# 도커에서 PostgreSQL을 사용할 경우 아래 코드 활성화
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -154,6 +141,25 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# Channels settings
+WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = 'config.asgi.application'
+
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', os.getenv("REDIS_PORT"))], # 도커 환경에서 수행 시 활성화
+            # "hosts": [('localhost', os.getenv("REDIS_PORT"))], # 로컬에서 수행 시 활성화
+        },
+    },
+}
+
+
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_ID")
@@ -163,8 +169,9 @@ EMAIL_PORT = 587
 DEFAULT_FROM_MAIL = EMAIL_HOST_USER
 
 
-CELERY_BROKER_URL = f'redis://redis:{os.getenv("REDIS_PORT")}/0'  
-CELERY_RESULT_BACKEND = f'redis://redis:{os.getenv("REDIS_PORT")}/0'  
+# Celery settings
+CELERY_BROKER_URL = f'redis://redis:{os.getenv("REDIS_PORT")}/0'  # 도커 환경에서 수행 시 활성화
+CELERY_RESULT_BACKEND = f'redis://redis:{os.getenv("REDIS_PORT")}/0'  # 도커 환경에서 수행 시 활성화
 # CELERY_BROKER_URL = f'redis://localhost:{os.getenv("REDIS_PORT")}/0'  # 로컬에서 수행 시 활성화
 # CELERY_RESULT_BACKEND = f'redis://localhost:{os.getenv("REDIS_PORT")}/0'  # 로컬에서 수행 시 활성화
 CELERY_ACCEPT_CONTENT = ['json']
