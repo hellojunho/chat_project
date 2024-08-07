@@ -2,19 +2,19 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4">Chat with {{ searched_user.username }}</h2>
+    <h2 class="mb-4">{{ searched_user.username }} 님과의 채팅방</h2>
     <div id="chat-messages" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: scroll;">
         {% for message in messages %}
             <div class="chat-message-container">
                 <div class="chat-message">
-                    <strong>{{ message.sender.username }}:</strong> {{ message.message }}
+                    <strong>{{ message.message_sender.username }}:</strong> {{ message.message }}
                 </div>
             </div>
         {% endfor %}
     </div>
     <form id="chat-form" method="post" class="d-flex">
         {% csrf_token %}
-        <input type="text" id="chat-message-input" class="form-control me-2" placeholder="Enter your message" required>
+        <input type="text" id="chat-message-input" class="form-control me-2" placeholder="메시지를 입력하세요..." required>
         <button type="submit" class="btn btn-primary">Send</button>
     </form>
 </div>

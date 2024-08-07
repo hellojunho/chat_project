@@ -4,16 +4,16 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-4">
-            <h2 class="mb-4 text-center">Login</h2>
+            <h2 class="mb-4 text-center">로그인</h2>
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
                     {{ form.as_p }}
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-100">로그인</button>
             </form>
             <div class="text-center mt-3">
-                <a href="{% url 'accounts:signup' %}">Sign Up</a>
+                <a href="{% url 'accounts:signup' %}">회원가입</a>
             </div>
         </div>
     </div>

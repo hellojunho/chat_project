@@ -5,20 +5,20 @@
     <h1>최근 채팅 목록</h1>
     <ul>
         {% for chat in recent_chats %}
-            <li>
-                {% if chat.sender == request.user %}
-                    <a href="{% url 'chat:chat_room' user_id=chat.receiver.id %}">
-                        {{ chat.receiver.username }}
-                    </a>
-                {% else %}
-                    <a href="{% url 'chat:chat_room' user_id=chat.sender.id %}">
-                        {{ chat.sender.username }}
-                    </a>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>최근 채팅 목록이 없습니다.</li>
-        {% endfor %}
+        <div>
+            {% if chat.sender == request.user %}
+                <a href="{% url 'chat:chat_room' user_id=chat.receiver.id %}">
+                    {{ chat.receiver.username }}
+                </a>
+            {% else %}
+                <a href="{% url 'chat:chat_room' user_id=chat.sender.id %}">
+                    {{ chat.sender.username }}
+                </a>
+            {% endif %}
+            {% empty %}
+                <li>최근 채팅 목록이 없습니다.</li>
+            {% endfor %}
+        </div>
     </ul>
 </div>
 {% endblock %}
