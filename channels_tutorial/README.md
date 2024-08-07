@@ -103,5 +103,13 @@ make migrate
 - 로그인 되어있는 사용자라면 우측 상단 `로그아웃` 버튼을 클릭하여 로그아웃을 진행할 수 있습니다.  
 - 만약 로그인 되어있지 않은 사용자라면, `로그인` 버튼과 `회원가입` 버튼이 활성화 됩니다.  
 
+<hr>
+
+## 참고 자료
+❗️ [Django Channels 공식 문서](https://channels.readthedocs.io/en/latest/)  
+❗️ [Channels 사용하기 - 2](https://oraange.tistory.com/23)  
+❗️ [파이썬/장고로 웹채팅 서비스 만들기 (Feat. Channels) - 기본편](https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%9E%A5%EA%B3%A0-%EC%9B%B9%EC%B1%84%ED%8C%85-%EC%B1%84%EB%84%90%EC%8A%A4-%EA%B8%B0%EB%B3%B8/dashboard)  
+<hr>
+
 ## 기술 및 고려사항 등을 정리한 문서
-[Notion 페이지](https://rose-catshark-09a.notion.site/7e65435b400d4acc86170a85eb177063)
+🍀 [Notion 페이지](https://rose-catshark-09a.notion.site/7e65435b400d4acc86170a85eb177063)
