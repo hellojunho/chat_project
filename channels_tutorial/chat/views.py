@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from .models import ChatRoom, ChatMessage
 from accounts.models import CustomUser
 from config.utils import exception_handler
+from django.db.models import Q
+
 
 @login_required
 @exception_handler(view=True)
@@ -11,7 +13,7 @@ def get_chat_list(request):
     """
     채팅방 목록을 보여주는 view
     """
-    chat_rooms = ChatRoom.objects.filter(sender=request.user)
+    chat_rooms = ChatRoom.objects.filter(sender=request.user.id) | ChatRoom.objects.filter(receiver=request.user.id)
     recent_chats = chat_rooms.distinct().order_by('-id')
 
     return render(request, 'chat/get_chat_list.html', {'recent_chats': recent_chats})
@@ -37,9 +39,13 @@ def chat_room(request, user_id):
     채팅방 view
     """
     searched_user = CustomUser.objects.get(id=user_id)
-    chat_room, created = ChatRoom.objects.get_or_create(
-        sender=request.user if request.user.id < searched_user.id else searched_user,
-        receiver=searched_user if request.user.id < searched_user.id else request.user
-    )
+    chat_room = ChatRoom.objects.filter(
+        Q(sender=request.user, receiver=searched_user) |
+        Q(sender=searched_user, receiver=request.user)
+    ).first()
+
+    if not chat_room:
+        chat_room = ChatRoom.objects.create(sender=request.user, receiver=searched_user)
+
     messages = ChatMessage.objects.filter(room=chat_room)
     return render(request, 'chat/chat_room.html', {'chat_room': chat_room, 'messages': messages, 'searched_user': searched_user})

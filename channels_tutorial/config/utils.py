@@ -36,16 +36,16 @@ def exception_handler(view: bool = False):
                 return func(*args, **kwargs)
             except CustomUser.DoesNotExist as e:
                 print(f"exception_handler: An error occurred in {func.__name__}: {e}")
-                return "An error occurred in " + e  
+                return "An error occurred"
             except ChatRoom.DoesNotExist as e:
                 print(f"exception_handler: An error occurred in {func.__name__}: {e}")
-                return "An error occurred in " + e  
+                return "An error occurred"
             except ChatMessage.DoesNotExist as e:
                 print(f"exception_handler: An error occurred in {func.__name__}: {e}")
-                return "An error occurred in " + e  
+                return "An error occurred"
             except Exception as e:
                 print(f"exception_handler: An error occurred in {func.__name__}: {e}")
-                return "An error occurred in " + e  
+                return "An error occurred"
 
         return wrapper
     return exception_handler_decorator

@@ -10,6 +10,10 @@
                     <a href="{% url 'chat:chat_room' user_id=chat.receiver.id %}">
                         {{ chat.receiver.username }}
                     </a>
+                {% else %}
+                    <a href="{% url 'chat:chat_room' user_id=chat.sender.id %}">
+                        {{ chat.sender.username }}
+                    </a>
                 {% endif %}
             </li>
         {% empty %}
