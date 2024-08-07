@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
+from config.utils import exception_handler
 
+@exception_handler(view=True)
 def signup_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -16,6 +18,7 @@ def signup_view(request):
     return render(request, 'accounts/signup.html', {'form': form})
 
 
+@exception_handler(view=True)
 def login_view(request):
     """
     로그인 view
@@ -33,9 +36,10 @@ def login_view(request):
 
 
 @login_required
+@exception_handler(view=True)
 def logout_view(request):
     """
     로그아웃 view
     """
     logout(request)
-    return redirect('chat:index') 
+    return redirect('chat:get_chat_list') 
