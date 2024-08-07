@@ -15,4 +15,4 @@ python-dotenv==1.0.1
 redis==5.0.8
 requests==2.32.3
 selenium==4.23.1
-
+django-session-timeout==0.1.0
