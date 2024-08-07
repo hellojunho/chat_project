@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Chat with {{ other_user.username }}</h2>
+    <div id="chat-messages" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: scroll;">
+        {% for message in messages %}
+            <div class="chat-message-container {% if message.sender == user %}me{% else %}other{% endif %}">
+                <div class="chat-message">
+                    <strong>{{ message.sender.username }}:</strong> {{ message.message }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <form id="chat-form" method="post" class="d-flex">
+        {% csrf_token %}
+        <input type="text" id="chat-message-input" class="form-control me-2" placeholder="Enter your message" required>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra-script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatMessages = document.querySelector('#chat-messages');
+
+        // Scroll to the bottom when the page loads
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        const roomName = "{{ chat_room.id }}";
+        let chatSocket = null;
+
+        function connectWebSocket() {
+            chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+            );
+
+            chatSocket.onopen = function() {
+                console.log('WebSocket connection opened');
+            };
+
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('chat-message-container', data.username === "{{ user.username }}" ? 'me' : 'other');
+                messageElement.innerHTML = `<div class="chat-message"><strong>${data.username}:</strong> ${data.message}</div>`;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // 스크롤 맨 아래로 이동
+            };
+
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly. Reconnecting...', e);
+                setTimeout(connectWebSocket, 1000);  // 재연결 시도
+            };
+
+            chatSocket.onerror = function(e) {
+                console.error('WebSocket error:', e);
+            };
+        }
+
+        connectWebSocket();
+
+        document.querySelector('#chat-form').onsubmit = function(e) {
+            e.preventDefault();
+            const messageInput = document.querySelector('#chat-message-input');
+            const message = messageInput.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInput.value = '';
+        };
+    });
+</script>
+{% endblock %}

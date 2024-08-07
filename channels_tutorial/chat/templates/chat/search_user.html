@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Search User{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Search User</h2>
+    <form method="post" class="d-flex align-items-center">
+        {% csrf_token %}
+        <input type="text" name="username" class="form-control me-2" placeholder="Enter username">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+    {% endif %}
+</div>
+{% endblock %}

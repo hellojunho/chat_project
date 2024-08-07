@@ -1,0 +1,43 @@
+{% load django_bootstrap5 %}
+
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}My Chat App{% endblock %}</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% block extra-style %}{% endblock %}
+</head>
+<body>
+
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+    <div class="col-md-3 text-end">
+        <a href="{% url 'chat:index' %}" class="btn btn-outline-primary me-2">Home</a>
+        <a href="{% url 'chat:search_user' %}" class="btn btn-outline-primary me-2">Search User</a>
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'accounts:logout' %}" class="btn btn-primary">Logout</a>
+        {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary me-2">Login</a>
+            <a href="{% url 'accounts:signup' %}" class="btn btn-primary">Signup</a>
+        {% endif %}
+    </div>
+</header>
+
+<div class="container">
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+
+{% block extra-script %}{% endblock %}
+
+</body>
+</html>
