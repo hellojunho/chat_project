@@ -1,13 +1,15 @@
+# Define variables
+PYTHON = python3
+
+# Define targets
 new-makemigrations:
-	python3 manage.py makemigrations chat
-	python3 manage.py makemigrations accounts
-	python3 manage.py makemigrations
+	$(PYTHON) manage.py makemigrations chat
+	$(PYTHON) manage.py makemigrations accounts
+	$(PYTHON) manage.py makemigrations
 
 new-migrate:
-	python3 manage.py migrate chat
-	python3 manage.py migrate accounts
-	python3 manage.py migrate
+	$(PYTHON) manage.py migrate chat
+	$(PYTHON) manage.py migrate accounts
+	$(PYTHON) manage.py migrate
 
-migrate:
-	make makemigrations
-	make migrate
+migrate: new-makemigrations new-migrate
