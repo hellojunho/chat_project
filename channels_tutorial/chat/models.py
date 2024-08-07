@@ -13,13 +13,13 @@ class ChatRoom(models.Model):
 
 class ChatMessage(models.Model):
     id = models.AutoField(primary_key=True)
-    room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    message_sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = True
-        ordering = ["timestamp"]
+        ordering = ["created_at"]
         db_table = "chat_message"
 
