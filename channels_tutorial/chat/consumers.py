@@ -22,10 +22,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         message = data["message"]
 
-        # Save the message and send email notification
         await self.save_message(self.scope["user"], message)
 
-        # Send message to WebSocket group
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -39,7 +37,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event["message"]
         username = event["username"]
 
-        # Send message to WebSocket
         await self.send(
             text_data=json.dumps(
                 {
