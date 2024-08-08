@@ -113,3 +113,8 @@ make migrate
 
 ## 기술 및 고려사항 등을 정리한 문서
 🍀 [Notion 페이지](https://rose-catshark-09a.notion.site/7e65435b400d4acc86170a85eb177063)
+
+<hr>
+
+## HTTPS 배포
+[https://hellojunho.shop/](https://hellojunho.shop/)
