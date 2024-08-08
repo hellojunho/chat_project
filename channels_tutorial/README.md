@@ -51,7 +51,20 @@ Django와 Django-Channels를 사용하여 실시간 통신 환경을 구축하�
 
 <hr>
 
-## 설치 및 실행 방법
+## 프로젝트 클론
+1. git clone
+```
+git clone https://github.com/hellojunho/chat_project.git
+```
+2. 프로젝트 디렉토리로 이동
+```
+cd channels_tutorial
+```
+
+<hr>
+
+## 설치 및 실행
+`Local`환경과 `Docker`환경에서의 실행 방법을 구분하였습니다.
 
 ### 로컬 개발 환경
 1. requirements.txt 설치
