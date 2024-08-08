@@ -6,27 +6,27 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('chat', '0002_alter_chatmessage_options_alter_chatroom_options_and_more'),
+        ("chat", "0002_alter_chatmessage_options_alter_chatroom_options_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='chatmessage',
-            options={'managed': True, 'ordering': ['created_at']},
+            name="chatmessage",
+            options={"managed": True, "ordering": ["created_at"]},
         ),
         migrations.RenameField(
-            model_name='chatmessage',
-            old_name='room',
-            new_name='chat_room',
+            model_name="chatmessage",
+            old_name="room",
+            new_name="chat_room",
         ),
         migrations.RenameField(
-            model_name='chatmessage',
-            old_name='timestamp',
-            new_name='created_at',
+            model_name="chatmessage",
+            old_name="timestamp",
+            new_name="created_at",
         ),
         migrations.RenameField(
-            model_name='chatmessage',
-            old_name='sender',
-            new_name='message_sender',
+            model_name="chatmessage",
+            old_name="sender",
+            new_name="message_sender",
         ),
     ]
