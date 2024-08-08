@@ -68,4 +68,4 @@ def logout(request: HttpRequest) -> RedirectOrResponse:
     """
     logout(request)
 
-    return redirect("chat:get_chat_list")
+    return redirect("chat:chat_list")

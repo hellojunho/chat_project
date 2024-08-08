@@ -15,7 +15,7 @@ RedirectOrResponse = t.Union[HttpResponseRedirect, HttpResponse]
 
 @login_required
 @exception_handler(view=True)
-def get_chat_list(request: HttpRequest) -> HttpResponse:
+def chat_list(request: HttpRequest) -> HttpResponse:
     """
     채팅방 목록 페이지 view
     params:
@@ -28,7 +28,7 @@ def get_chat_list(request: HttpRequest) -> HttpResponse:
     ) | ChatRoom.objects.filter(receiver=request.user.id)
     recent_chats = chat_rooms.distinct().order_by("-id")
 
-    return render(request, "chat/get_chat_list.html", {"recent_chats": recent_chats})
+    return render(request, "chat/chat_list.html", {"recent_chats": recent_chats})
 
 
 @login_required
