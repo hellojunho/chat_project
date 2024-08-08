@@ -1,8 +1,10 @@
+import os
 from config.celery import app
 from django.utils import timezone
 from config.utils import send_email
-
-NOW = timezone.now()
+from dotenv import load_dotenv
+from django.core.mail import EmailMultiAlternatives
+load_dotenv()
 
 
 @app.task(bind=True)
@@ -15,8 +17,15 @@ def send_email_contain_message(self, receiver_email: str, message_body: str) -> 
     return:
     - 이메일 전송 성공 시 True, 실패 시 False
     """
+    sender_email = os.getenv("EMAIL_HOST_USER")
+    msg = EmailMultiAlternatives(
+        subject="메시지가 도착했습니다.",
+        body=f"{message_body}",
+        from_email=sender_email,
+        to=[receiver_email],
+    )
     try:
-        send_email(receiver_email, message_body)
+        msg.send()
         return True
     except Exception as e:
         print(e)
