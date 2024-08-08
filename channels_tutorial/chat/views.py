@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .models import ChatRoom, ChatMessage
-from accounts.models import CustomUser
+from accounts.models import User
 from config.utils import exception_handler
 
 
@@ -23,10 +23,12 @@ def get_chat_list(request: HttpRequest) -> HttpResponse:
     return:
     - 채팅방 목록 페이지 render
     """
-    chat_rooms = ChatRoom.objects.filter(sender=request.user.id) | ChatRoom.objects.filter(receiver=request.user.id)
-    recent_chats = chat_rooms.distinct().order_by('-id')
+    chat_rooms = ChatRoom.objects.filter(
+        sender=request.user.id
+    ) | ChatRoom.objects.filter(receiver=request.user.id)
+    recent_chats = chat_rooms.distinct().order_by("-id")
 
-    return render(request, 'chat/get_chat_list.html', {'recent_chats': recent_chats})
+    return render(request, "chat/get_chat_list.html", {"recent_chats": recent_chats})
 
 
 @login_required
@@ -40,13 +42,13 @@ def search_user(request: HttpRequest) -> RedirectOrResponse:
     - GET 요청 시, 유저 검색 페이지 render
     - POST 요청 시, 검색한 유저의 채팅방으로 redirect
     """
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        user = CustomUser.objects.get(username=username)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        user = User.objects.get(username=username)
 
-        return redirect('chat:chat_room', user_id=user.id)
-    
-    return render(request, 'chat/search_user.html')
+        return redirect("chat:chat_room", user_id=user.id)
+
+    return render(request, "chat/search_user.html")
 
 
 @login_required
@@ -60,13 +62,17 @@ def chat_room(request: HttpRequest, user_id: int) -> HttpResponse:
     return:
     - 채팅방 페이지 render
     """
-    searched_user = CustomUser.objects.get(id=user_id)
+    searched_user = User.objects.get(id=user_id)
     chat_room = ChatRoom.objects.filter(
-        Q(sender=request.user, receiver=searched_user) |
-        Q(sender=searched_user, receiver=request.user)
+        Q(sender=request.user, receiver=searched_user)
+        | Q(sender=searched_user, receiver=request.user)
     ).first()
     if not chat_room:
         chat_room = ChatRoom.objects.create(sender=request.user, receiver=searched_user)
     messages = ChatMessage.objects.filter(chat_room=chat_room)
 
-    return render(request, 'chat/chat_room.html', {'chat_room': chat_room, 'messages': messages, 'searched_user': searched_user})
+    return render(
+        request,
+        "chat/chat_room.html",
+        {"chat_room": chat_room, "messages": messages, "searched_user": searched_user},
+    )

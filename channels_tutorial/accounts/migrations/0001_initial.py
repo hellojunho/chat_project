@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="CustomUser",
+            name="User",
             fields=[
                 (
                     "id",
