@@ -28,9 +28,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ["*", "hellojunho.shop", "www.hellojunho.shop"]
 
-CSRF_TRUSTED_ORIGINS = ['https://hellojunho.shop', 'https://www.hellojunho.shop']
+ALLOWED_HOSTS = ["*"]
+
+# ALLOWED_HOSTS = ["hellojunho.shop", "www.hellojunho.shop", "3.35.219.124"]
+
+# CSRF_TRUSTED_ORIGINS = ['https://hellojunho.shop', 'https://www.hellojunho.shop', 'http://3.35.219.124:8000/']
 
 # Application definition
 
