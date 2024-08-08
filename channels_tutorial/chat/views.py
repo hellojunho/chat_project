@@ -1,4 +1,4 @@
-import typing as t
+import typing
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
@@ -9,8 +9,7 @@ from accounts.models import User
 from config.utils import exception_handler
 
 
-# 응답이 다음 유형 중 하나인 경우의 alias -> views에서 사용
-RedirectOrResponse = t.Union[HttpResponseRedirect, HttpResponse]
+RedirectOrResponse = typing.Union[HttpResponseRedirect, HttpResponse]
 
 
 @login_required
