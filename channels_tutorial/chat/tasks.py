@@ -1,6 +1,5 @@
 import os
 from config.celery import app
-from django.utils import timezone
 from dotenv import load_dotenv
 from django.core.mail import EmailMultiAlternatives
 load_dotenv()

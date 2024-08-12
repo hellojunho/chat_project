@@ -2,6 +2,7 @@ import os
 import smtplib
 from django.test import TestCase
 
+
 class TestSmtp(TestCase):
     def test_smtp(self) -> bool:
         """

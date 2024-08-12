@@ -1,6 +1,5 @@
 import typing
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
-from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -27,7 +26,7 @@ def chat_list(request: HttpRequest) -> HttpResponse:
     except Exception as e:
         print(f"An error occurred in chat_list: {e}")
         return f"An error occurred in chat_list: {e}"
-    
+
 
 @login_required
 def chat_search_user(request: HttpRequest) -> RedirectOrResponse:
@@ -70,7 +69,11 @@ def chat_room(request: HttpRequest, user_id: int) -> HttpResponse:
         return render(
             request,
             "chat/chat_room.html",
-            {"chat_room": chat_room, "messages": messages, "searched_user": searched_user},
+            {
+                "chat_room": chat_room,
+                "messages": messages,
+                "searched_user": searched_user
+            },
         )
     except Exception as e:
         print(f"An error occurred in chat_room: {e}")

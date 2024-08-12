@@ -61,7 +61,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             recipient = (
                 chat_room.receiver if chat_room.sender == user else chat_room.sender
             )
-            task = send_email_contain_message.delay(recipient.email, message)
+            send_email_contain_message.delay(recipient.email, message)
             ChatMessage.objects.create(
                 chat_room=chat_room, message_sender=user, message=message
             )

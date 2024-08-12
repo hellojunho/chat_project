@@ -9,7 +9,6 @@ class ChatRoom(models.Model):
     sender: 채팅방 생성 요청자 (검색을 한 유저)
     receiver: 채팅방 생성 요청 수신자 (검색이 된 유저)
     """
-
     id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender"
@@ -24,7 +23,7 @@ class ChatRoom(models.Model):
         db_table = "chat_room"
 
 
-class ChatMessage(models.Model):
+class ChatMessage(models.Model):    
     """
     채팅 메시지 모델
     id: ChatMessage id
@@ -33,7 +32,6 @@ class ChatMessage(models.Model):
     message: 메시지 내용
     created_at: 메시지 생성 시간
     """
-
     id = models.AutoField(primary_key=True)
     chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     message_sender = models.ForeignKey(

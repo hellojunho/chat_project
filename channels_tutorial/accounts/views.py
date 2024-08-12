@@ -27,7 +27,7 @@ def accounts_signup(request: HttpRequest) -> RedirectOrResponse:
             return redirect("chat:search_user")
         else:
             return redirect("accounts:signup")
-    else: 
+    else:
         form = UserCreationForm()
     return render(request, "accounts/signup.html", {"form": form})
 
