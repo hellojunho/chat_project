@@ -163,4 +163,4 @@ cython_debug/
 
 
 accounts/migrations
-channels/migrations
+chat/migrations
