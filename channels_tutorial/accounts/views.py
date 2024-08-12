@@ -5,14 +5,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import UserCreationForm
-from config.utils import exception_handler
 
 
 RedirectOrResponse = typing.Union[HttpResponseRedirect, HttpResponse]
 
 
-@exception_handler(view=True)
-def signup(request: HttpRequest) -> RedirectOrResponse:
+def accounts_signup(request: HttpRequest) -> RedirectOrResponse:
     """
     회원가입 view
     params:
@@ -26,15 +24,15 @@ def signup(request: HttpRequest) -> RedirectOrResponse:
         if form.is_valid():
             user = form.save()
             login(request, user)
-
             return redirect("chat:search_user")
+        else:
+            return redirect("accounts:signup")
     else: 
         form = UserCreationForm()
     return render(request, "accounts/signup.html", {"form": form})
 
 
-@exception_handler(view=True)
-def login(request: HttpRequest) -> RedirectOrResponse:
+def accounts_login(request: HttpRequest) -> RedirectOrResponse:
     """
     로그인 view
     params:
@@ -56,8 +54,7 @@ def login(request: HttpRequest) -> RedirectOrResponse:
 
 
 @login_required
-@exception_handler(view=True)
-def logout(request: HttpRequest) -> RedirectOrResponse:
+def accounts_logout(request: HttpRequest) -> RedirectOrResponse:
     """
     로그아웃 view
     params:
@@ -66,5 +63,4 @@ def logout(request: HttpRequest) -> RedirectOrResponse:
     - 로그아웃 후 채팅방 목록 페이지로 redirect
     """
     logout(request)
-
     return redirect("chat:chat_list")
